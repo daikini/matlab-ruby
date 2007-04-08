@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_variable (Matlab::Driver::Native::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/matlab/driver/native/driver.rb, line 18</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_variable</span>(<span class="ruby-identifier">engine</span>, <span class="ruby-identifier">name</span>)
+      <span class="ruby-constant">API</span>.<span class="ruby-identifier">engGetVariable</span>(<span class="ruby-identifier">engine</span>, <span class="ruby-identifier">name</span>).<span class="ruby-identifier">to_ruby</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
