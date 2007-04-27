@@ -123,7 +123,7 @@ module Matlab
       n.times do |column_index|
         m.times do |row_index|
           value = Matlab::Driver::Native::API.mxGetCell(matrix, index).to_ruby
-          cell_matrix[row_index, column_index] = (value.to_s == nil.to_matlab.to_s ? nil : value)
+          cell_matrix[row_index, column_index] = (value.nil? || value.to_s == nil.to_matlab.to_s ? nil : value)
           index += 1
         end
       end
