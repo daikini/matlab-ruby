@@ -165,7 +165,7 @@ module Matlab
         n.times do |column_index|
           names.each do |name|
             value = Matlab::Driver::Native::API.mxGetField(matrix, index, name)
-            struct_matrix[row_index, column_index][name] = (Matlab::Driver::Native::API.mxIsEmpty(value) || value.to_ruby.to_s == nil.to_matlab.to_s ? nil : value.to_ruby)
+            struct_matrix[row_index, column_index][name] = (value.nil? || Matlab::Driver::Native::API.mxIsEmpty(value) || value.to_ruby.to_s == nil.to_matlab.to_s ? nil : value.to_ruby)
           end
           index += 1
         end
