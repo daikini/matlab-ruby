@@ -27,6 +27,10 @@ class NilClass
   def to_matlab
     Matlab::Driver::Native::API.mxGetNaN
   end
+  
+  def to_ruby
+    nil
+  end
 end
 
 class Float
@@ -44,6 +48,17 @@ class Numeric
 end
 
 class Array
+  # Converts the array into a 1 Dimensional MATLAB numeric matrix
+  def to_matlab
+    values = flatten
+    matrix = Matlab::Matrix.new(values.size, 1)
+    
+    values.each_with_index do |value, index|
+      matrix[index, 0] = value
+    end
+    matrix.to_matlab
+  end
+  
   # Flattens and converts the array to a 1 Dimensional Matlab::CellMatrix
   def to_cell_matrix
     values = flatten
@@ -75,7 +90,7 @@ module Matlab
       matrix
     end
     
-    # Creates a Matlab::Matrix from a MATLAB numeric matrix
+    # Creates a Matlab::Matrix or Ruby Array from a MATLAB numeric matrix
     def self.from_matlab(matrix)
       m = Matlab::Driver::Native::API.mxGetM(matrix)
       n = Matlab::Driver::Native::API.mxGetN(matrix)
@@ -91,7 +106,11 @@ module Matlab
         end
       end
       
-      matlab_matrix
+      if m == 1 || n == 1
+        matlab_matrix.cells.flatten
+      else
+        matlab_matrix
+      end
     end
   end
   
@@ -112,7 +131,7 @@ module Matlab
       matrix
     end
     
-    # Creates a Matlab::CellMatrix from a MATLAB cell matrix
+    # Creates a Matlab::CellMatrix or Ruby Array from a MATLAB cell matrix
     def self.from_matlab(matrix)
       m = Matlab::Driver::Native::API.mxGetM(matrix)
       n = Matlab::Driver::Native::API.mxGetN(matrix)
@@ -128,7 +147,11 @@ module Matlab
         end
       end
       
-      cell_matrix
+      if m == 1 || n == 1
+        cell_matrix.cells.flatten
+      else
+        cell_matrix
+      end
     end
   end
   

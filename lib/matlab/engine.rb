@@ -35,15 +35,30 @@ module Matlab
       @driver.eval_string(@handle, string)
     end
     
-    # Puts or Gets a value to MATLAB via a given name
+    # Put a value to MATLAB via a given name
+    def put_variable(name, value)
+      @driver.put_variable(@handle, name, value)
+    end
+    
+    # Get a value from MATLAB via a given name
+    def get_variable(name)
+      @driver.get_variable(@handle, name)
+    end
+    
+    # Call a MATLAB function passing in the arguments
     def method_missing(method_id, *args)
       method_name = method_id.id2name
       
-      if method_name[(-1)..-1] == "="
-        @driver.put_variable(@handle, method_name.chop, args.first)
-      else
-        @driver.get_variable(@handle, method_name)
+      variable_names = []
+      args.each_with_index do |arg, index|
+        variable_names << variable_name = "mr#{index}_#{method_name}"
+        put_variable(variable_name, arg)
       end
+      
+      eval_string("#{method_name}(#{variable_names.join(", ")})")
+      result = get_variable("ans")
+      eval_string("clear #{variable_names.join(" ")}")
+      result
     end
       
     # Closes this engine

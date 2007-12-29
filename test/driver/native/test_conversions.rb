@@ -42,6 +42,10 @@ class ConversionsTest < Test::Unit::TestCase
     assert_equal cell_matrix, [true, "1", "2", ["3", nil, 5], 6, 7, false].to_cell_matrix
   end
   
+  def test_array_to_matlab_to_ruby
+    assert_equal [1.0, 2.0, 3.0, nil, 5.0], ["1", 2, "3.0", nil, 5].to_matlab.to_ruby
+  end
+  
   def test_matlab_matrix_to_matlab_to_ruby
     matrix = Matlab::Matrix.new(3, 3)
     3.times { |m| 3.times { |n| matrix[m, n] = rand } }

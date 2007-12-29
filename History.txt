@@ -1,7 +1,17 @@
+== 1.1.0 / 2007-12-28
+
+* 1 bug fix
+  * Added nil to_ruby method.
+* 4 enhancements
+  * Removed dynamic variable name setters/getters in favor of put_variable, get_variable methods.
+  * MATLAB functions may now be executed directly from the engine instead of having to use eval_string.
+  * 1 dimensional MATLAB matrices are now converted into a normal Ruby Arrays.
+  * Ruby Arrays are now converted into 1 Dimensional MATLAB matrices.
+  
 == 1.0.1 / 2007-04-27
 
 * 1 bug fix
-  * Need to check for nil value during MATLAB to Ruby StructMatrix conversion otherwise it segfaults
+  * Need to check for nil value during MATLAB to Ruby StructMatrix conversion otherwise it segfaults.
 
 == 1.0.0 / 2007-04-06
 

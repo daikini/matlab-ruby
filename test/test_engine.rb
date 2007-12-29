@@ -65,13 +65,23 @@ class EngineTest < Test::Unit::TestCase
     @engine.close
   end
   
-  def test_method_missing_get
+  def test_get_variable
     @driver.expects(:get_variable).with(@handle, "x")
-    @engine.x
+    @engine.get_variable("x")
   end
   
-  def test_method_missing_put
+  def test_put_variable
     @driver.expects(:put_variable).with(@handle, "y", 123.456)
-    @engine.y = 123.456
+    @engine.put_variable("y", 123.456)
+  end
+  
+  def test_method_missing
+    @engine.expects(:put_variable).with("mr0_rand", 2)
+    @engine.expects(:put_variable).with("mr1_rand", 4)
+    @engine.expects(:eval_string).with("rand(mr0_rand, mr1_rand)")
+    @engine.expects(:get_variable).with("ans").returns("The Answer")
+    @engine.expects(:eval_string).with("clear mr0_rand mr1_rand")
+    
+    assert_equal "The Answer", @engine.rand(2, 4)
   end
 end
