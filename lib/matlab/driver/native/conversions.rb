@@ -50,26 +50,23 @@ end
 class Array
   # Converts the array into a 1 Dimensional MATLAB numeric or cell matrix
   def to_matlab
-    values = flatten
+    if all? { |value| value.kind_of?(Numeric) || value.nil? }
+      matrix = Matlab::Matrix.new(size, 1)
     
-    if values.all? { |value| value.kind_of?(Numeric) || value.nil? }
-      matrix = Matlab::Matrix.new(values.size, 1)
-    
-      values.each_with_index do |value, index|
+      each_with_index do |value, index|
         matrix[index, 0] = value
       end
       matrix.to_matlab
     else
-      to_cell_matrix
+      to_cell_matrix.to_matlab
     end
   end
   
   # Flattens and converts the array to a 1 Dimensional Matlab::CellMatrix
   def to_cell_matrix
-    values = flatten
-    cell_matrix = Matlab::CellMatrix.new(values.size, 1)
+    cell_matrix = Matlab::CellMatrix.new(size, 1)
     
-    values.each_with_index do |value, index|
+    each_with_index do |value, index|
       cell_matrix[index, 0] = value
     end
     cell_matrix

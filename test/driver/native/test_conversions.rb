@@ -44,7 +44,7 @@ class ConversionsTest < Test::Unit::TestCase
   
   def test_array_to_matlab_to_ruby
     assert_equal [1.0, nil, 3.0], [1, nil, 3.0].to_matlab.to_ruby
-    assert_equal [1, "2", false], [1, "2", false].to_matlab.to_ruby
+    assert_equal [1, "2", false, ["foo", "bar", "baz"]], [1, "2", false, ["foo", "bar", "baz"]].to_matlab.to_ruby
   end
   
   def test_matlab_matrix_to_matlab_to_ruby
