@@ -2,7 +2,7 @@ module Matlab
 
   module Version
 
-    MAJOR = 1
+    MAJOR = 0
     MINOR = 0
     TINY  = 1
 

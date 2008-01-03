@@ -33,18 +33,27 @@ class ConversionsTest < Test::Unit::TestCase
   end
   
   def test_array_to_cell_matrix
-    cell_matrix = Matlab::CellMatrix.new(9, 1)
-    9.times { |i| cell_matrix[i, 0] = (i > 4 ? i : i.to_s)  }
+    cell_matrix = Matlab::CellMatrix.new(7, 1)
     cell_matrix[0, 0] = true
-    cell_matrix[4, 0] = nil
-    cell_matrix[8, 0] = false
+    cell_matrix[1, 0] = "1"
+    cell_matrix[2, 0] = "2"
+    cell_matrix[3, 0] = ["3", nil, 5]
+    cell_matrix[4, 0] = 6
+    cell_matrix[5, 0] = 7
+    cell_matrix[6, 0] = false
     
     assert_equal cell_matrix, [true, "1", "2", ["3", nil, 5], 6, 7, false].to_cell_matrix
   end
   
   def test_array_to_matlab_to_ruby
     assert_equal [1.0, nil, 3.0], [1, nil, 3.0].to_matlab.to_ruby
-    assert_equal [1, "2", false, ["foo", "bar", "baz"]], [1, "2", false, ["foo", "bar", "baz"]].to_matlab.to_ruby
+    assert_equal [1.0, "2", false, ["foo", "bar", "baz"]], [1, "2", false, ["foo", "bar", "baz"]].to_matlab.to_ruby
+  end
+  
+  def test_hash_to_matlab_to_ruby
+    assert_equal({"foo" => "bar"}, {"foo" => "bar"}.to_matlab.to_ruby) 
+    assert_equal({"foo" => [1.0,2.0,3.0]}, {"foo" => [1,2,3]}.to_matlab.to_ruby) 
+    assert_equal({"foo" => { "bar" => [1.0,2.0,3.0, [4.0,5.0,6.0]] }}, {"foo" => { "bar" => [1,2,3, [4,5,6]] }}.to_matlab.to_ruby)
   end
   
   def test_matlab_matrix_to_matlab_to_ruby

@@ -163,7 +163,7 @@ module Matlab
       end
       
       if m == 1 || n == 1
-        cell_matrix.cells.flatten
+        cell_matrix.cells.collect { |cell| cell.first }
       else
         cell_matrix
       end
