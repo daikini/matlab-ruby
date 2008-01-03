@@ -48,15 +48,20 @@ class Numeric
 end
 
 class Array
-  # Converts the array into a 1 Dimensional MATLAB numeric matrix
+  # Converts the array into a 1 Dimensional MATLAB numeric or cell matrix
   def to_matlab
     values = flatten
-    matrix = Matlab::Matrix.new(values.size, 1)
     
-    values.each_with_index do |value, index|
-      matrix[index, 0] = value
+    if values.all? { |value| value.kind_of?(Numeric) || value.nil? }
+      matrix = Matlab::Matrix.new(values.size, 1)
+    
+      values.each_with_index do |value, index|
+        matrix[index, 0] = value
+      end
+      matrix.to_matlab
+    else
+      to_cell_matrix
     end
-    matrix.to_matlab
   end
   
   # Flattens and converts the array to a 1 Dimensional Matlab::CellMatrix
@@ -68,6 +73,19 @@ class Array
       cell_matrix[index, 0] = value
     end
     cell_matrix
+  end
+end
+
+class Hash
+  # Converts the hash into a 1 Dimensional MATLAB struct matrix
+  def to_matlab
+    struct_matrix = Matlab::StructMatrix.new(1, 1, *keys)
+    
+    each do |(key, value)|
+      struct_matrix[0,0][key] = value
+    end
+    
+    struct_matrix.to_matlab
   end
 end
 
@@ -175,7 +193,7 @@ module Matlab
       matrix
     end
     
-    # Creates a Matlab::StructMatrix from a MATLAB struct matrix
+    # Creates a Matlab::StructMatrix or Ruby Hash from a MATLAB struct matrix
     def self.from_matlab(matrix)
       m = Matlab::Driver::Native::API.mxGetM(matrix)
       n = Matlab::Driver::Native::API.mxGetN(matrix)
@@ -194,7 +212,11 @@ module Matlab
         end
       end
       
-      struct_matrix
+      if m == 1 && n == 1
+        struct_matrix.cells.flatten.first
+      else
+        struct_matrix
+      end
     end
   end
 end

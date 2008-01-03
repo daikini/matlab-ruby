@@ -1,12 +1,15 @@
-== 1.1.0 / 2007-12-28
+== 2.0.0 / 2008-01-02
 
 * 1 bug fix
-  * Added nil to_ruby method.
-* 4 enhancements
-  * Removed dynamic variable name setters/getters in favor of put_variable, get_variable methods.
+  * Added NilClass to_ruby method.
+* 1 change
+  * Removed dynamic variable name setters/getters in favor of put_variable, get_variable methods. 
+* 5 enhancements
   * MATLAB functions may now be executed directly from the engine instead of having to use eval_string.
   * 1 dimensional MATLAB matrices are now converted into a normal Ruby Arrays.
-  * Ruby Arrays are now converted into 1 Dimensional MATLAB matrices.
+  * Ruby Arrays are now converted into 1 dimensional MATLAB matrices.
+  * 1 dimensional MATLAB struct matrices are now converted into normal Ruby Hashes.
+  * Ruby Hashes are now converted into 1 dimensional MATLAB struct matrices.
   
 == 1.0.1 / 2007-04-27
 

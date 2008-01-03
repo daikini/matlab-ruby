@@ -7,10 +7,10 @@ module Matlab
   #
   #   engine = Matlab::Engine.new
   #
-  #   engine.x = 123.456
-  #   engine.y = 789.101112
-  #   engine.eval_string "z = x * y"
-  #   p engine.z
+  #   engine.put_variable "x", 123.456
+  #   engine.put_variable "y", 789.101112
+  #   engine.eval "z = x * y"
+  #   p engine.get_variable "z"
   #
   #   engine.close
   #

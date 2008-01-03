@@ -17,16 +17,16 @@ A Ruby interface to the MATLAB interpreted language.
   require 'matlab'
   
   engine = Matlab::Engine.new
-  engine.x = 123.456
-  engine.y = 789.101112
-  engine.eval_string "z = x * y"
-  engine.z
+  engine.put_variable "x", 123.456
+  engine.put_variable "y", 789.101112
+  engine.eval "z = x * y"
+  engine.get_variable "z"
   
   matrix = Matlab::Matrix.new(20, 400)
   20.times { |m| 400.times { |n| matrix[m, n] = rand } }
-  engine.m = matrix
+  engine.put_variable "m", matrix
   
-  engine.eval_string "save '/tmp/20_x_400_matrix"
+  engine.save "/tmp/20_x_400_matrix"
   engine.close
 
 == REQUIREMENTS:
