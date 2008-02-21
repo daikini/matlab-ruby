@@ -13,6 +13,12 @@ module Matlab
   #   p engine.get_variable "z"
   #
   #   engine.close
+  # 
+  #   # May also use block syntax for new
+  #   Matlab::Engine.new do |engine|
+  #     engine.put_variable "x", 123.456
+  #     engine.get_variable "x"
+  #   end
   #
   # Values are sent to and from MATLAB by calling a method on the
   # engine with the variable name of interest.
@@ -28,6 +34,14 @@ module Matlab
       load_driver(options[:driver])
       
       @handle = @driver.open(command)
+      
+      if block_given?
+        begin
+          yield self
+        ensure
+          close
+        end
+      end
     end
     
     # Sends the given string to MATLAB to be evaluated

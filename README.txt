@@ -28,6 +28,12 @@ A Ruby interface to the MATLAB interpreted language.
   
   engine.save "/tmp/20_x_400_matrix"
   engine.close
+  
+  # May also use block syntax for new
+  Matlab::Engine.new do |engine|
+    engine.put_variable "x", 123.456
+    engine.get_variable "x"
+  end
 
 == REQUIREMENTS:
 
