@@ -1,3 +1,9 @@
+== 2.0.3 / 2008-05-19
+
+* 2 bug fixes
+  * Empty matrices are converted to empty ruby arrays.
+  * Empty ruby arrays are converted to an empty MATLAB matrix
+
 == 2.0.2 / 2008-05-19
 
 * 1 bug fix

@@ -50,7 +50,10 @@ end
 class Array
   # Converts the array into a 1 Dimensional MATLAB numeric or cell matrix
   def to_matlab
-    if all? { |value| value.kind_of?(Numeric) || value.nil? }
+    if empty?
+      matrix = Matlab::Matrix.new(0, 0)
+      matrix.to_matlab
+    elsif all? { |value| value.kind_of?(Numeric) || value.nil? }
       matrix = Matlab::Matrix.new(size, 1)
     
       each_with_index do |value, index|
@@ -231,7 +234,9 @@ class SWIG::TYPE_p_mxArray_tag
       mxArrayToString(self)
     when mxIsLogical(self)
       mxIsLogicalScalarTrue(self)
-    when (mxGetM(self) > 1 || mxGetN(self) > 1) || (mxGetM(self) == 0 && mxGetN(self) == 0)
+    when (mxGetM(self) == 0 && mxGetN(self) == 0)
+      []
+    when (mxGetM(self) > 1 || mxGetN(self) > 1)
       Matlab::Matrix.from_matlab(self)
     when mxIsDouble(self)
       mxGetScalar(self)

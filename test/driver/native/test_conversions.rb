@@ -66,7 +66,13 @@ class ConversionsTest < Test::Unit::TestCase
   
   def test_should_convert_a_0x0_matlab_matrix
     matrix = Matlab::Matrix.new(0, 0)
-    assert_equal matrix, matrix.to_matlab.to_ruby
+    result = matrix.to_matlab.to_ruby
+    assert_equal [], result 
+  end
+  
+  def test_should_convert_an_empty_ruby_array
+    array = []
+    assert_equal array, array.to_matlab.to_ruby
   end
   
   def test_matlab_cell_matrix_to_matlab_to_ruby
