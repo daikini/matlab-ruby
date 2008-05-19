@@ -1,3 +1,8 @@
+== 2.0.2 / 2008-05-19
+
+* 1 bug fix
+  * Empty matrices are properly converted to empty Matlab::Matrices instead of floats.
+
 == 2.0.1 / 2008-02-21
 
 * 1 minor enhancement

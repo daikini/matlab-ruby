@@ -231,7 +231,7 @@ class SWIG::TYPE_p_mxArray_tag
       mxArrayToString(self)
     when mxIsLogical(self)
       mxIsLogicalScalarTrue(self)
-    when (mxGetM(self) > 1 || mxGetN(self) > 1)
+    when (mxGetM(self) > 1 || mxGetN(self) > 1) || (mxGetM(self) == 0 && mxGetN(self) == 0)
       Matlab::Matrix.from_matlab(self)
     when mxIsDouble(self)
       mxGetScalar(self)
