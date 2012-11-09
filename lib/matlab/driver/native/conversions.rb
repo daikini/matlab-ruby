@@ -93,7 +93,7 @@ module Matlab
   class Matrix
     # Converts the matrix into a MATLAB numeric matrix
     def to_matlab
-      matrix = Matlab::Driver::Native::API.mxCreateDoubleMatrix(m, n, Matlab::Driver::Native::API::MxREAL)
+      matrix = Matlab::Driver::Native::API.mxCreateDoubleMatrix_730(m, n, Matlab::Driver::Native::API::MxREAL)
       double_array = Matlab::Driver::Native::API::DoubleArray.new(m * n)
       
       index = 0
