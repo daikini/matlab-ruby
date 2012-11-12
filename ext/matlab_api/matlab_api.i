@@ -1,4 +1,7 @@
 %module "matlab::driver::native::API"
+%typemap(in) mwSize {
+   $1 = NUM2INT($input);
+}
 %include "carrays.i"
 %{
 /* Includes the header in the wrapper code */
